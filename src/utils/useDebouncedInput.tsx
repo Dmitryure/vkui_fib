@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export const useDebouncedInput = (
-  initialValue: number | string = "",
+  initialValue: number,
   timeout: number
-): [string | number, Dispatch<SetStateAction<string | number>>] => {
+): [number, Dispatch<SetStateAction<number>>, number] => {
   const [value, setValue] = useState(initialValue);
   const [debouncedValue, setDebouncedValue] = useState(initialValue);
 
@@ -17,5 +17,5 @@ export const useDebouncedInput = (
     };
   }, [value, timeout]);
 
-  return [debouncedValue, setValue];
+  return [debouncedValue, setValue, value];
 };

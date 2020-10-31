@@ -5,16 +5,13 @@ import {
   FormLayout,
   FormLayoutGroup,
   Input,
+  ScreenSpinner,
 } from "@vkontakte/vkui";
-import React, {
-  ChangeEvent,
-  SetStateAction,
-  useCallback,
-  useMemo,
-} from "react";
-import { fibList, useDebouncedInput } from "./utils";
+import React, { ChangeEvent, SetStateAction, useEffect } from "react";
+import { useDebouncedInput } from "./utils";
 import { PanelData, EPanels } from "./App";
 import { NumberCard } from "./NumberCard";
+import { useWorker } from "./utils/useWorker";
 
 type Props = {
   handleNavigationClick: (
@@ -25,30 +22,35 @@ type Props = {
 };
 
 export const FibNumberGrid = ({ handleNavigationClick }: Props) => {
-  const [number, setNumber] = useDebouncedInput(0, 1000);
+  const [debouncedValue, setValue, value] = useDebouncedInput(0, 1000);
+  const [data, setNum, loading] = useWorker(0);
 
-  const handleInput = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setNumber(Number(e.target.value));
-    },
-    [setNumber]
-  );
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const number = Number(e.target.value);
+    if (isNaN(number)) {
+      return;
+    }
+    setValue(number);
+  };
 
-  const memoList = useMemo(() => {
-    return fibList(Number(number));
-  }, [number]);
+  useEffect(() => {
+    setNum(debouncedValue);
+  }, [debouncedValue, setNum]);
 
   return (
     <>
       <FormLayout>
         <FormLayoutGroup top="Введите число - получите фибоначи">
-          <Input onChange={handleInput} />
+          <Input value={value ? value : ""} onChange={handleInput} />
         </FormLayoutGroup>
-        <Cell>{!isNaN ? "Введенное число: " + number : "Введите число"}</Cell>
-
-        {memoList.length > 0 ? (
+        <Cell>
+          {!isNaN ? "Введенное число: " + debouncedValue : "Введите число"}
+        </Cell>
+        {loading ? (
+          <ScreenSpinner />
+        ) : data.length > 0 ? (
           <CardGrid>
-            {memoList.map((n, i) => {
+            {data.map((n, i) => {
               return (
                 <Card
                   size="s"

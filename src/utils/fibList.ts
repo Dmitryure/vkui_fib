@@ -5,6 +5,5 @@ export const fibList = (num: number): number[] => {
     for (let i = 2; i <= num; i++) {
         arr.push(recursiveFib(i))
     }
-    console.log(arr)
     return arr
 }
