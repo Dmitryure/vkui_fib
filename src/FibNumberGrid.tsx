@@ -11,7 +11,7 @@ import React, { ChangeEvent, SetStateAction, useEffect } from "react";
 import { useDebouncedInput } from "./utils";
 import { PanelData, EPanels } from "./App";
 import { NumberCard } from "./NumberCard";
-import { useWorker } from "./utils/useWorker";
+import { useFibonacciWorker } from "./utils/useFibonacciWorker";
 
 type Props = {
   handleNavigationClick: (
@@ -23,7 +23,7 @@ type Props = {
 
 export const FibNumberGrid = ({ handleNavigationClick }: Props) => {
   const [debouncedValue, setValue, value] = useDebouncedInput(0, 1000);
-  const [data, setNum, loading] = useWorker(0);
+  const [data, setNum, loading] = useFibonacciWorker(0);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const number = Number(e.target.value);

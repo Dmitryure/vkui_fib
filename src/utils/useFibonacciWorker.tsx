@@ -4,7 +4,7 @@ import makeFibListWorker from "workerize!./fibList";
 import { usePreviousNumber } from "./usePreviousNumber";
 let workerInstance = makeFibListWorker();
 
-export const useWorker = (
+export const useFibonacciWorker = (
   initialNum: number
 ): [number[], Dispatch<SetStateAction<number>>, boolean] => {
   const [num, setNum] = useState(initialNum);
