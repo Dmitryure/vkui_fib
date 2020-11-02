@@ -7,11 +7,14 @@ import {
   Input,
   ScreenSpinner,
 } from "@vkontakte/vkui";
-import React, { ChangeEvent, SetStateAction, useEffect } from "react";
-import { useDebouncedInput } from "./utils";
-import { PanelData, EPanels } from "./App";
-import { NumberCard } from "./NumberCard";
-import { useFibonacciWorker } from "./utils/useFibonacciWorker";
+import React, { ChangeEvent, SetStateAction, useEffect, useState } from "react";
+import { useDebouncedInput } from "../../../../utils";
+import { PanelData, EPanels } from "../../App";
+import { NumberCard, Timer } from "./components";
+import { useFibonacciWorker } from "../../../../utils/useFibonacciWorker";
+import style from "./FibNumberGrid.module.css";
+
+const debounceTime = 1000;
 
 type Props = {
   handleNavigationClick: (
@@ -22,7 +25,7 @@ type Props = {
 };
 
 export const FibNumberGrid = ({ handleNavigationClick }: Props) => {
-  const [debouncedValue, setValue, value] = useDebouncedInput(0, 1000);
+  const [debouncedValue, setValue, value] = useDebouncedInput(0, debounceTime);
   const [data, setNum, loading] = useFibonacciWorker(0);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,8 +43,16 @@ export const FibNumberGrid = ({ handleNavigationClick }: Props) => {
   return (
     <>
       <FormLayout>
-        <FormLayoutGroup top="Введите число - получите фибоначи">
-          <Input value={value ? value : ""} onChange={handleInput} />
+        <FormLayoutGroup
+          className={style.inputContainer}
+          top="Введите число - получите фибоначи"
+        >
+          <Input
+            className={style.input}
+            value={value ? value : ""}
+            onChange={handleInput}
+          />
+          <Timer time={debounceTime} value={value} ignore={[0]} />
         </FormLayoutGroup>
         <Cell>
           {!isNaN ? "Введенное число: " + debouncedValue : "Введите число"}

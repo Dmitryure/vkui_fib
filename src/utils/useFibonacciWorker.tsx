@@ -10,10 +10,10 @@ export const useFibonacciWorker = (
   const [num, setNum] = useState(initialNum);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<number[]>([]);
-  const previousNumber = usePreviousNumber();
+  const previousNumber = usePreviousNumber(num);
 
   useEffect(() => {
-    if (previousNumber === num) {
+    if (previousNumber === num || num === 0) {
       return;
     }
     setLoading(true);
@@ -27,7 +27,7 @@ export const useFibonacciWorker = (
       setLoading(false);
       workerInstance.terminate();
     });
-  }, [num, previousNumber]);
+  }, [num]);
 
   return [data, setNum, loading];
 };

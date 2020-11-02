@@ -17,6 +17,7 @@ export const NumberInfo = ({ currentIndex, currentNumber }: Props) => {
 
   return (
     <>
+      <Cell>Индекс числа Фибоначчи: {currentIndex}</Cell>
       {info ? <Cell>{info}</Cell> : <Spinner />}
     </>
   );

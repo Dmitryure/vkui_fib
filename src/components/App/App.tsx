@@ -1,9 +1,9 @@
 import React, { SetStateAction, useCallback, useState } from "react";
 import { View, Panel, PanelHeader, PanelHeaderBack } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
-import { FibNumberGrid } from "./FibNumberGrid";
+import { FibNumberGrid } from "./components";
 import style from "./App.module.css";
-import { NumberInfo } from "./NumberInfo";
+import { NumberInfo } from "./components";
 
 export enum EPanels {
   main = "main",
@@ -20,7 +20,7 @@ const initialActivePanelData = {
   history: ["main"],
 };
 
-function App() {
+export const App = () => {
   const [panelData, setPanelData] = useState<PanelData>(initialActivePanelData);
   const [currentNumber, setCurrentNumber] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -66,4 +66,4 @@ function App() {
   );
 }
 
-export default App;
+
