@@ -12,7 +12,6 @@ import { useDebouncedInput } from "../../../../utils";
 import { PanelData, EPanels } from "../../App";
 import { NumberCard, Timer } from "./components";
 import { useFibonacciWorker } from "../../../../utils/useFibonacciWorker";
-import style from "./FibNumberGrid.module.css";
 
 const debounceTime = 1000;
 
@@ -44,11 +43,9 @@ export const FibNumberGrid = ({ handleNavigationClick }: Props) => {
     <>
       <FormLayout>
         <FormLayoutGroup
-          className={style.inputContainer}
           top="Введите число - получите фибоначи"
         >
           <Input
-            className={style.input}
             value={value ? value : ""}
             onChange={handleInput}
           />
